@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Travel Agency - Complete System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .page-header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Home Page */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-success {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #40c057;
+        }
+
+        .btn-warning {
+            background: #ffa94d;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #ff922b;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+
+        .btn-secondary {
+            background: #868e96;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #6c757d;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Table Styles */
+        .table-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .table-section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        tbody tr {
+            transition: background 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-confirmed {
+            background: #d3f9d8;
+            color: #2b8a3e;
+        }
+
+        .status-pending {
+            background: #fff3bf;
+            color: #e67700;
+        }
+
+        .status-cancelled {
+            background: #ffe3e3;
+            color: #c92a2a;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.success {
+            background: #d3f9d8;
+            color: #2b8a3e;
+            border-left: 4px solid #2b8a3e;
+        }
+
+        .message.error {
+            background: #ffe3e3;
+            color: #c92a2a;
+            border-left: 4px solid #c92a2a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">✈️ Wanderlust Travel</a>
+            <ul class="nav-links">
+                <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('manage-trips')">Manage Trips</a></li>
+                <li><a href="#" onclick="showPage('manage-bookings')">Manage Bookings</a></li>
+                <li><a href="#" onclick="showPage('view-trips')">View Trips</a></li>
+                <li><a href="#" onclick="showPage('view-bookings')">View Bookings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <h1>🌍 Welcome to Wanderlust Travel Agency</h1>
+                <p>Your Complete Travel Management System</p>
+                <a href="#" class="cta-button" onclick="showPage('manage-trips')">Get Started</a>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="icon">✈️</div>
+                    <h3>Manage Trips</h3>
+                    <p>Add, update, and delete travel packages</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📅</div>
+                    <h3>Handle Bookings</h3>
+                    <p>Process customer bookings efficiently</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>View Reports</h3>
+                    <p>Track all trips and bookings</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">💼</div>
+                    <h3>Database Ready</h3>
+                    <p>Easy integration with databases</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Trips Page -->
+    <div id="manage-trips" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Manage Trips</h1>
+                <p>Add, update, or delete travel packages</p>
+            </div>
+
+            <div id="tripMessage" class="message"></div>
+
+            <!-- Add/Update Trip Form -->
+            <div class="form-section">
+                <h2>Add / Update Trip</h2>
+                <form id="tripForm">
+                    <input type="hidden" id="tripId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tripDestination">Destination *</label>
+                            <input type="text" id="tripDestination" required placeholder="e.g., Paris, France">
+                        </div>
+                        <div class="form-group">
+                            <label for="tripDuration">Duration (Days) *</label>
+                            <input type="number" id="tripDuration" min="1" required placeholder="e.g., 7">
+                        </div>
+                        <div class="form-group">
+                            <label for="tripPrice">Price ($) *</label>
+                            <input type="number" id="tripPrice" min="0" step="0.01" required placeholder="e.g., 1299.99">
+                        </div>
+                        <div class="form-group">
+                            <label for="tripStartDate">Start Date *</label>
+                            <input type="date" id="tripStartDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tripEndDate">End Date *</label>
+                            <input type="date" id="tripEndDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tripCapacity">Max Capacity *</label>
+                            <input type="number" id="tripCapacity" min="1" required placeholder="e.g., 20">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tripDescription">Description</label>
+                        <textarea id="tripDescription" placeholder="Enter trip description..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Trip</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetTripForm()">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Trips Table -->
+            <div class="table-section">
+                <h2>All Trips</h2>
+                <div class="search-box">
+                    <input type="text" id="tripSearch" placeholder="Search trips by destination..." onkeyup="searchTrips()">
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Destination</th>
+                                <th>Duration</th>
+                                <th>Price</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Capacity</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tripsTableBody">
+                            <tr>
+                                <td colspan="9" style="text-align: center; padding: 2rem; color: #999;">
+                                    No trips available. Add your first trip above.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Bookings Page -->
+    <div id="manage-bookings" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Manage Bookings</h1>
+                <p>Add, update, or delete customer bookings</p>
+            </div>
+
+            <div id="bookingMessage" class="message"></div>
+
+            <!-- Add/Update Booking Form -->
+            <div class="form-section">
+                <h2>Add / Update Booking</h2>
+                <form id="bookingForm">
+                    <input type="hidden" id="bookingId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="bookingCustomerName">Customer Name *</label>
+                            <input type="text" id="bookingCustomerName" required placeholder="e.g., John Smith">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingCustomerEmail">Email *</label>
+                            <input type="email" id="bookingCustomerEmail" required placeholder="e.g., john@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingCustomerPhone">Phone *</label>
+                            <input type="tel" id="bookingCustomerPhone" required placeholder="e.g., +1 555-0101">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingTripId">Select Trip *</label>
+                            <select id="bookingTripId" required onchange="calculateTotal()">
+                                <option value="">-- Select Trip --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingNumPeople">Number of People *</label>
+                            <input type="number" id="bookingNumPeople" min="1" required onchange="calculateTotal()" placeholder="e.g., 2">
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingDate">Booking Date *</label>
+                            <input type="date" id="bookingDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingStatus">Status *</label>
+                            <select id="bookingStatus" required>
+                                <option value="Pending">Pending</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookingTotalAmount">Total Amount ($)</label>
+                            <input type="number" id="bookingTotalAmount" step="0.01" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingNotes">Special Notes</label>
+                        <textarea id="bookingNotes" placeholder="Enter any special requests or notes..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Save Booking</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetBookingForm()">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Bookings Table -->
+            <div class="table-section">
+                <h2>All Bookings</h2>
+                <div class="search-box">
+                    <input type="text" id="bookingSearch" placeholder="Search bookings by customer name..." onkeyup="searchBookings()">
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Trip</th>
+                                <th>People</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <tr>
+                                <td colspan="10" style="text-align: center; padding: 2rem; color: #999;">
+                                    No bookings available. Add your first booking above.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Trips Page -->
+    <div id="view-trips" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Available Trips</h1>
+                <p>Browse all available travel packages</p>
+            </div>
+
+            <div class="table-section">
+                <div class="search-box">
+                    <input type="text" id="viewTripSearch" placeholder="Search trips..." onkeyup="searchViewTrips()">
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Destination</th>
+                                <th>Duration</th>
+                                <th>Price</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Capacity</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="viewTripsTableBody">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 2rem; color: #999;">
+                                    No trips available.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Bookings Page -->
+    <div id="view-bookings" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>All Bookings</h1>
+                <p>View all customer bookings</p>
+            </div>
+
+            <div class="table-section">
+                <div class="search-box">
+                    <input type="text" id="viewBookingSearch" placeholder="Search bookings..." onkeyup="searchViewBookings()">
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Trip</th>
+                                <th>People</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="viewBookingsTableBody">
+                            <tr>
+                                <td colspan="10" style="text-align: center; padding: 2rem; color: #999;">
+                                    No bookings available.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        let trips = [];
+        let bookings = [];
+        let tripIdCounter = 1;
+        let bookingIdCounter = 1;
+
+        // Initialize with sample data
+        function initSampleData() {
+            trips = [
+                {id: tripIdCounter++, destination: 'Paris, France', duration: 7, price: 1299, startDate: '2026-03-15', endDate: '2026-03-22', capacity: 20, description: 'Explore the city of lights'},
+                {id: tripIdCounter++, destination: 'Tokyo, Japan', duration: 10, price: 1899, startDate: '2026-04-10', endDate: '2026-04-20', capacity: 15, description: 'Experience Japanese culture'},
+                {id: tripIdCounter++, destination: 'Bali, Indonesia', duration: 5, price: 899, startDate: '2026-05-01', endDate: '2026-05-06', capacity: 25, description: 'Tropical paradise'}
+            ];
+
+            bookings = [
+                {id: bookingIdCounter++, customerName: 'John Smith', customerEmail: 'john@email.com', customerPhone: '555-0101', tripId: 1, numPeople: 2, bookingDate: '2026-01-15', totalAmount: 2598, status: 'Confirmed', notes: 'Anniversary trip'},
+                {id: bookingIdCounter++, customerName: 'Sarah Johnson', customerEmail: 'sarah@email.com', customerPhone: '555-0102', tripId: 2, numPeople: 1, bookingDate: '2026-01-20', totalAmount: 1899, status: 'Pending', notes: ''}
+            ];
+
+            displayTrips();
+            displayBookings();
+            displayViewTrips();
+            displayViewBookings();
+            populateTripDropdown();
+        }
+
+        // Page Navigation
+        function showPage(pageName) {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            pages.forEach(page => page.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(pageName).classList.add('active');
+            event.target.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Message Display
+        function showMessage(elementId, message, type) {
+            const messageEl = document.getElementById(elementId);
+            messageEl.textContent = message;
+            messageEl.className = `message ${type} show`;
+            
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 3000);
+        }
+
+        // Trip Management
+        document.getElementById('tripForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const tripId = document.getElementById('tripId').value;
+            const tripData = {
+                destination: document.getElementById('tripDestination').value,
+                duration: parseInt(document.getElementById('tripDuration').value),
+                price: parseFloat(document.getElementById('tripPrice').value),
+                startDate: document.getElementById('tripStartDate').value,
+                endDate: document.getElementById('tripEndDate').value,
+                capacity: parseInt(document.getElementById('tripCapacity').value),
+                description: document.getElementById('tripDescription').value
+            };
+
+            if (tripId) {
+                const index = trips.findIndex(t => t.id == tripId);
+                trips[index] = { ...trips[index], ...tripData };
+                showMessage('tripMessage', 'Trip updated successfully!', 'success');
+            } else {
+                tripData.id = tripIdCounter++;
+                trips.push(tripData);
+                showMessage('tripMessage', 'Trip added successfully!', 'success');
+            }
+
+            displayTrips();
+            displayViewTrips();
+            populateTripDropdown();
+            resetTripForm();
+        });
+
+        function displayTrips() {
+            const tbody = document.getElementById('tripsTableBody');
+            
+            if (trips.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #999;">No trips available.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = trips.map(trip => `
+                <tr>
+                    <td>${trip.id}</td>
+                    <td><strong>${trip.destination}</strong></td>
+                    <td>${trip.duration} days</td>
+                    <td>$${trip.price.toFixed(2)}</td>
+                    <td>${trip.startDate}</td>
+                    <td>${trip.endDate}</td>
+                    <td>${trip.capacity}</td>
+                    <td>${trip.description || 'N/A'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-warning btn-sm" onclick="editTrip(${trip.id})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteTrip(${trip.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function displayViewTrips() {
+            const tbody = document.getElementById('viewTripsTableBody');
+            
+            if (trips.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #999;">No trips available.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = trips.map(trip => `
+                <tr>
+                    <td>${trip.id}</td>
+                    <td><strong>${trip.destination}</strong></td>
+                    <td>${trip.duration} days</td>
+                    <td>$${trip.price.toFixed(2)}</td>
+                    <td>${trip.startDate}</td>
+                    <td>${trip.endDate}</td>
+                    <td>${trip.capacity}</td>
+                    <td>${trip.description || 'N/A'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function editTrip(id) {
+            const trip = trips.find(t => t.id === id);
+            if (trip) {
+                document.getElementById('tripDescription').value = trip.description;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function deleteTrip(id) {
+            if (confirm('Are you sure you want to delete this trip?')) {
+                const hasBookings = bookings.some(b => b.tripId === id);
+                if (hasBookings) {
+                    showMessage('tripMessage', 'Cannot delete trip with existing bookings!', 'error');
+                    return;
+                }
+                
+                trips = trips.filter(t => t.id !== id);
+                displayTrips();
+                displayViewTrips();
+                populateTripDropdown();
+                showMessage('tripMessage', 'Trip deleted successfully!', 'success');
+            }
+        }
+
+        function resetTripForm() {
+            document.getElementById('tripForm').reset();
+            document.getElementById('tripId').value = '';
+        }
+
+        function searchTrips() {
+            const searchTerm = document.getElementById('tripSearch').value.toLowerCase();
+            const filteredTrips = trips.filter(trip => 
+                trip.destination.toLowerCase().includes(searchTerm)
+            );
+            
+            const tbody = document.getElementById('tripsTableBody');
+            if (filteredTrips.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #999;">No trips found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredTrips.map(trip => `
+                <tr>
+                    <td>${trip.id}</td>
+                    <td><strong>${trip.destination}</strong></td>
+                    <td>${trip.duration} days</td>
+                    <td>${trip.price.toFixed(2)}</td>
+                    <td>${trip.startDate}</td>
+                    <td>${trip.endDate}</td>
+                    <td>${trip.capacity}</td>
+                    <td>${trip.description || 'N/A'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-warning btn-sm" onclick="editTrip(${trip.id})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteTrip(${trip.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function searchViewTrips() {
+            const searchTerm = document.getElementById('viewTripSearch').value.toLowerCase();
+            const filteredTrips = trips.filter(trip => 
+                trip.destination.toLowerCase().includes(searchTerm)
+            );
+            
+            const tbody = document.getElementById('viewTripsTableBody');
+            if (filteredTrips.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #999;">No trips found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredTrips.map(trip => `
+                <tr>
+                    <td>${trip.id}</td>
+                    <td><strong>${trip.destination}</strong></td>
+                    <td>${trip.duration} days</td>
+                    <td>${trip.price.toFixed(2)}</td>
+                    <td>${trip.startDate}</td>
+                    <td>${trip.endDate}</td>
+                    <td>${trip.capacity}</td>
+                    <td>${trip.description || 'N/A'}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Booking Management
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const bookingId = document.getElementById('bookingId').value;
+            const bookingData = {
+                customerName: document.getElementById('bookingCustomerName').value,
+                customerEmail: document.getElementById('bookingCustomerEmail').value,
+                customerPhone: document.getElementById('bookingCustomerPhone').value,
+                tripId: parseInt(document.getElementById('bookingTripId').value),
+                numPeople: parseInt(document.getElementById('bookingNumPeople').value),
+                bookingDate: document.getElementById('bookingDate').value,
+                totalAmount: parseFloat(document.getElementById('bookingTotalAmount').value),
+                status: document.getElementById('bookingStatus').value,
+                notes: document.getElementById('bookingNotes').value
+            };
+
+            if (bookingId) {
+                const index = bookings.findIndex(b => b.id == bookingId);
+                bookings[index] = { ...bookings[index], ...bookingData };
+                showMessage('bookingMessage', 'Booking updated successfully!', 'success');
+            } else {
+                bookingData.id = bookingIdCounter++;
+                bookings.push(bookingData);
+                showMessage('bookingMessage', 'Booking added successfully!', 'success');
+            }
+
+            displayBookings();
+            displayViewBookings();
+            resetBookingForm();
+        });
+
+        function displayBookings() {
+            const tbody = document.getElementById('bookingsTableBody');
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 2rem; color: #999;">No bookings available.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = bookings.map(booking => {
+                const trip = trips.find(t => t.id === booking.tripId);
+                const statusClass = `status-${booking.status.toLowerCase()}`;
+                
+                return `
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td><strong>${booking.customerName}</strong></td>
+                        <td>${booking.customerEmail}</td>
+                        <td>${booking.customerPhone}</td>
+                        <td>${trip ? trip.destination : 'N/A'}</td>
+                        <td>${booking.numPeople}</td>
+                        <td>${booking.bookingDate}</td>
+                        <td>${booking.totalAmount.toFixed(2)}</td>
+                        <td><span class="status-badge ${statusClass}">${booking.status}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-warning btn-sm" onclick="editBooking(${booking.id})">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteBooking(${booking.id})">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function displayViewBookings() {
+            const tbody = document.getElementById('viewBookingsTableBody');
+            
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 2rem; color: #999;">No bookings available.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = bookings.map(booking => {
+                const trip = trips.find(t => t.id === booking.tripId);
+                const statusClass = `status-${booking.status.toLowerCase()}`;
+                
+                return `
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td><strong>${booking.customerName}</strong></td>
+                        <td>${booking.customerEmail}</td>
+                        <td>${booking.customerPhone}</td>
+                        <td>${trip ? trip.destination : 'N/A'}</td>
+                        <td>${booking.numPeople}</td>
+                        <td>${booking.bookingDate}</td>
+                        <td>${booking.totalAmount.toFixed(2)}</td>
+                        <td><span class="status-badge ${statusClass}">${booking.status}</span></td>
+                        <td>${booking.notes || 'N/A'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function editBooking(id) {
+            const booking = bookings.find(b => b.id === id);
+            if (booking) {
+                document.getElementById('bookingId').value = booking.id;
+                document.getElementById('bookingCustomerName').value = booking.customerName;
+                document.getElementById('bookingCustomerEmail').value = booking.customerEmail;
+                document.getElementById('bookingCustomerPhone').value = booking.customerPhone;
+                document.getElementById('bookingTripId').value = booking.tripId;
+                document.getElementById('bookingNumPeople').value = booking.numPeople;
+                document.getElementById('bookingDate').value = booking.bookingDate;
+                document.getElementById('bookingTotalAmount').value = booking.totalAmount;
+                document.getElementById('bookingStatus').value = booking.status;
+                document.getElementById('bookingNotes').value = booking.notes;
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function deleteBooking(id) {
+            if (confirm('Are you sure you want to delete this booking?')) {
+                bookings = bookings.filter(b => b.id !== id);
+                displayBookings();
+                displayViewBookings();
+                showMessage('bookingMessage', 'Booking deleted successfully!', 'success');
+            }
+        }
+
+        function resetBookingForm() {
+            document.getElementById('bookingForm').reset();
+            document.getElementById('bookingId').value = '';
+            document.getElementById('bookingTotalAmount').value = '';
+        }
+
+        function searchBookings() {
+            const searchTerm = document.getElementById('bookingSearch').value.toLowerCase();
+            const filteredBookings = bookings.filter(booking => 
+                booking.customerName.toLowerCase().includes(searchTerm)
+            );
+            
+            const tbody = document.getElementById('bookingsTableBody');
+            if (filteredBookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 2rem; color: #999;">No bookings found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredBookings.map(booking => {
+                const trip = trips.find(t => t.id === booking.tripId);
+                const statusClass = `status-${booking.status.toLowerCase()}`;
+                
+                return `
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td><strong>${booking.customerName}</strong></td>
+                        <td>${booking.customerEmail}</td>
+                        <td>${booking.customerPhone}</td>
+                        <td>${trip ? trip.destination : 'N/A'}</td>
+                        <td>${booking.numPeople}</td>
+                        <td>${booking.bookingDate}</td>
+                        <td>${booking.totalAmount.toFixed(2)}</td>
+                        <td><span class="status-badge ${statusClass}">${booking.status}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-warning btn-sm" onclick="editBooking(${booking.id})">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteBooking(${booking.id})">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function searchViewBookings() {
+            const searchTerm = document.getElementById('viewBookingSearch').value.toLowerCase();
+            const filteredBookings = bookings.filter(booking => 
+                booking.customerName.toLowerCase().includes(searchTerm) ||
+                booking.customerEmail.toLowerCase().includes(searchTerm)
+            );
+            
+            const tbody = document.getElementById('viewBookingsTableBody');
+            if (filteredBookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 2rem; color: #999;">No bookings found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredBookings.map(booking => {
+                const trip = trips.find(t => t.id === booking.tripId);
+                const statusClass = `status-${booking.status.toLowerCase()}`;
+                
+                return `
+                    <tr>
+                        <td>${booking.id}</td>
+                        <td><strong>${booking.customerName}</strong></td>
+                        <td>${booking.customerEmail}</td>
+                        <td>${booking.customerPhone}</td>
+                        <td>${trip ? trip.destination : 'N/A'}</td>
+                        <td>${booking.numPeople}</td>
+                        <td>${booking.bookingDate}</td>
+                        <td>${booking.totalAmount.toFixed(2)}</td>
+                        <td><span class="status-badge ${statusClass}">${booking.status}</span></td>
+                        <td>${booking.notes || 'N/A'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Utility Functions
+        function populateTripDropdown() {
+            const select = document.getElementById('bookingTripId');
+            select.innerHTML = '<option value="">-- Select Trip --</option>' + 
+                trips.map(trip => `<option value="${trip.id}">${trip.destination} - ${trip.price}</option>`).join('');
+        }
+
+        function calculateTotal() {
+            const tripId = document.getElementById('bookingTripId').value;
+            const numPeople = document.getElementById('bookingNumPeople').value;
+            
+            if (tripId && numPeople) {
+                const trip = trips.find(t => t.id == tripId);
+                if (trip) {
+                    const total = trip.price * parseInt(numPeople);
+                    document.getElementById('bookingTotalAmount').value = total.toFixed(2);
+                }
+            }
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            initSampleData();
+        };
+    </script>
+</body>
+</html>Id').value = trip.id;
+                document.getElementById('tripDestination').value = trip.destination;
+                document.getElementById('tripDuration').value = trip.duration;
+                document.getElementById('tripPrice').value = trip.price;
+                document.getElementById('tripStartDate').value = trip.startDate;
+                document.getElementById('tripEndDate').value = trip.endDate;
+                document.getElementById('tripCapacity').value = trip.capacity;
+                document.getElementById('trip
