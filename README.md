@@ -41,7 +41,7 @@ travel-agency-system/
  - Install dependencies: npm install
  - Start The Server: npm start
 
-2. Frontend Configuration
+3. Frontend Configuration
  - Open frontend/index.html.
  - Ensure the API_BASE_URL matches your backend: http://localhost:3000/api.
  - Use Live Server in VS Code to run the file or open it in a modern browser.
